@@ -1,0 +1,13 @@
+Section2
+
+Lecture 4:
+
+	Node: JavaScript Runtime that uses the V8 Engine
+
+	V8 Engine: Open Source JavaScript engine written in C++ that takes
+	JavaScript code and compiles it to machine code - used inside of Nodejs
+	as well as the Chrome Browser
+
+Lecture 5:
+
+	NodeJS is non-blocking and single threaded. While waiting for a I/O process to finish (ex: fetching from database), the rest of the code will continue to execute.
