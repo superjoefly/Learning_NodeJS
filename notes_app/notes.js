@@ -7,19 +7,30 @@ var fs = require('fs');
 
 // Define functions:
 
+// Get (reads) and returns notes from file:
+var getNotes = () => {
+  try {
+    var notesString = fs.readFileSync('notes-data.json');
+    return JSON.parse(notesString);
+  } catch (e) {
+    return [];
+  }
+}
+
+
+// Saves (writes) notes to file:
+var saveNotes = (notesToWrite) => {
+  fs.writeFileSync('notes-data.json', JSON.stringify(notesToWrite));
+  console.log("Notes Saved!")
+}
+
+
 // Validates title and returns current notes:
 var validateTitle = (currentNotes, newNote) => {
 
-  // Check for matching titles:
-  var match = 0;
-  currentNotes.forEach(function(note) {
-    if (note.title === newNote.title) {
-      match += 1;
-    }
-  });
+  var duplicateNotes = currentNotes.filter((note) => note.title === newNote.title);
 
-  // If there were any matches:
-  if (match > 0) {
+  if (duplicateNotes.length > 0) {
     console.log("Title must be unique!");
     return currentNotes;
   } else {
@@ -28,19 +39,11 @@ var validateTitle = (currentNotes, newNote) => {
   }
 }
 
-// Writes notes to file:
-var writeNotes = (notesToWrite) => {
-  fs.writeFileSync('notes-data.json', JSON.stringify(notesToWrite));
-  console.log("Notes written to file!")
-}
-
-var readNotes = () => {
-  return JSON.parse(fs.readFileSync('notes-data.json'));
-}
-
 
 // Adds notes to file:
 var addNote = (title, body) => {
+  console.log("Adding note!")
+
   // Create new note object:
   var newNote = {
     title,
@@ -50,56 +53,50 @@ var addNote = (title, body) => {
   // Initialize notesToWrite to empty array:
   var notesToWrite = [];
 
-  try {
-    // Get current notes if they exist:
-    currentNotes = readNotes();
+  // Get current notes:
+  currentNotes = getNotes();
 
-    // Validate title is unique:
-    notesToWrite = validateTitle(currentNotes, newNote);
-    console.log(notesToWrite);
+  // Validate title and return notes to write:
+  notesToWrite = validateTitle(currentNotes, newNote);
 
-    // Write to file:
-    writeNotes(notesToWrite);
+  // Write notes to file:
+  saveNotes(notesToWrite);
+};
 
-  } catch (e) {
-    // If the notes file doesn't exist:
-    console.log("Creating file and writing note!");
-    notesToWrite.push(newNote);
 
-    // Create and write to file:
-    writeNotes(notesToWrite);
+
+// Displays all notes:
+var getAllNotes = () => {
+  console.log("Getting all notes...");
+
+  // Get the current notes:
+  var currentNotes = getNotes();
+
+  if (currentNotes.length > 0) {
+    currentNotes.forEach(function(note) {
+      console.log(note.title + ' : ' + note.body);
+    })
+  } else {
+    console.log("No notes to display :-(");
   }
 
 };
 
 
 
-var getAllNotes = () => {
-  console.log("Getting all notes...");
-
-  // Get the current notes:
-  currentNotes = readNotes();
-
-  // Display the notes:
-  currentNotes.forEach(function(note) {
-    console.log(note.title + ' : ' + note.body);
-  });
-};
-
-
-
+// Display specific note:
 var getSingleNote = (title) => {
   console.log("Getting note with title:", title);
 
   // Get the currentNotes:
-  currentNotes = readNotes();
+  currentNotes = getNotes();
 
   // Loop to find and display note:
   match = 0;
   currentNotes.forEach(function(note) {
     if (note.title === title) {
-      match = 1;
       console.log(note.title + ': ', note.body);
+      match += 1;
     }
   });
 
@@ -111,21 +108,20 @@ var getSingleNote = (title) => {
 
 
 
+// Remove specific note:
 var removeNote = (title) => {
   console.log("Removing note with title:", title);
 
   // Get current notes:
-  currentNotes = readNotes();
+  currentNotes = getNotes();
 
   // Loop to find and remove note:
+  match = 0;
   currentNotes.forEach(function(note, index) {
-    match = 0;
     if (note.title === title) {
       match += 1
       currentNotes.splice(index, 1)
-      console.log(currentNotes)
-      writeNotes(currentNotes)
-      console.log("Note removed!");
+      saveNotes(currentNotes)
     }
   });
 
@@ -133,6 +129,16 @@ var removeNote = (title) => {
   if (match === 0) {
     console.log("Note not found!");
   }
+
+}
+
+
+// Clears all notes:
+var clearAllNotes = () => {
+  console.log("Clearing all notes!");
+
+  // Write empty array to file:
+  saveNotes([]);
 }
 
 
@@ -142,5 +148,6 @@ module.exports = {
   addNote,
   getAllNotes,
   getSingleNote,
-  removeNote
+  removeNote,
+  clearAllNotes
 };

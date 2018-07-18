@@ -38,6 +38,8 @@ if (command === 'add') {
   notes.getSingleNote(argv.title);
 } else if (command === 'remove') {
   notes.removeNote(argv.title);
+} else if (command === 'clear') {
+  notes.clearAllNotes();
 } else {
   console.log("Command not recognized...");
 }
