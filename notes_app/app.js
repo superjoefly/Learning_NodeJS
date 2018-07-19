@@ -33,7 +33,7 @@ console.log('Command:', command);
 if (command === 'add') {
   notes.addNote(argv.title, argv.body);
 } else if (command === 'list') {
-  notes.getAllNotes();
+  notes.listNotes();
 } else if (command === 'read') {
   notes.getSingleNote(argv.title);
 } else if (command === 'remove') {

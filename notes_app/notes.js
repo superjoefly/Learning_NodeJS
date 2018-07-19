@@ -18,6 +18,16 @@ var getNotes = () => {
 }
 
 
+var logNote = (note) => {
+  // Break on this line and use repl to output notes //
+  debugger;
+  console.log("---");
+  console.log('Title:', note.title);
+  console.log('Body:', note.body);
+  console.log("---");
+}
+
+
 // Saves (writes) notes to file:
 var saveNotes = (notesToWrite) => {
   fs.writeFileSync('notes-data.json', JSON.stringify(notesToWrite));
@@ -25,26 +35,18 @@ var saveNotes = (notesToWrite) => {
 }
 
 
-// Validates title and returns current notes:
-var validateTitle = (currentNotes, newNote) => {
+// Returns notes with duplicate titles:
+var getDuplicates = (currentNotes, newNote) => {
 
   // Create new array with duplicates:
   var duplicateNotes = currentNotes.filter((note) => note.title === newNote.title);
 
-  // If we have duplicates:
-  if (duplicateNotes.length > 0) {
-    console.log("Err: Title must be unique!");
-  } else {
-    console.log("Note created!");
-    currentNotes.push(newNote);
-  }
-  return currentNotes;
+  return duplicateNotes;
 }
 
 
 // Adds notes to file:
 var addNote = (title, body) => {
-  console.log("Adding note!")
 
   // Create new note object:
   var newNote = {
@@ -52,29 +54,37 @@ var addNote = (title, body) => {
     body
   };
 
-  // Initialize notesToWrite to empty array:
-  var notesToWrite = [];
-
   // Get current notes:
-  currentNotes = getNotes();
+  var currentNotes = getNotes();
 
-  // Validate title and return notes to write:
-  notesToWrite = validateTitle(currentNotes, newNote);
+  // Check for duplicate titles:
+  var duplicateTitles = getDuplicates(currentNotes, newNote);
 
-  // Write notes to file:
-  saveNotes(notesToWrite);
+  // If we have duplicates:
+  if (duplicateTitles.length > 0) {
+    console.log("Err: Title must be unique!");
+  } else {
+    console.log("Adding Note:");
+    // Display the note:
+    logNote(newNote);
+    // Add new note to current notes:
+    currentNotes.push(newNote);
+    // Save current notes:
+    saveNotes(currentNotes);
+  }
 };
 
 
 
 // Displays all notes:
-var getAllNotes = () => {
-  console.log("Getting all notes...");
+var listNotes = () => {
+  console.log("Listing all notes...");
 
   // Get the current notes:
   var currentNotes = getNotes();
 
   // If we have notes:
+  console.log("---")
   if (currentNotes.length > 0) {
     currentNotes.forEach(function(note) {
       console.log(note.title + ' : ' + note.body);
@@ -82,6 +92,7 @@ var getAllNotes = () => {
   } else {
     console.log("No notes to display :-(");
   }
+  console.log("---")
 };
 
 
@@ -91,15 +102,16 @@ var getSingleNote = (title) => {
   console.log("Getting note with title:", title);
 
   // Get the currentNotes:
-  currentNotes = getNotes();
+  var currentNotes = getNotes();
 
   // Create new array with note if found:
-  singleNote = currentNotes.filter((note) => note.title === title);
+  var foundNote = currentNotes.filter((note) => note.title === title);
 
   // Display note and message to user:
-  if (singleNote.length > 0) {
+  if (foundNote.length > 0) {
     console.log("Note Found!");
-    console.log(singleNote[0].title + ' : ' + singleNote[0].body);
+    var note = foundNote[0];
+    logNote(note);
   } else {
     console.log("Note not found!");
   }
@@ -109,19 +121,20 @@ var getSingleNote = (title) => {
 
 // Remove specific note:
 var removeNote = (title) => {
-  console.log("Removing note with title:", title);
 
   // Get current notes:
-  currentNotes = getNotes();
+  var currentNotes = getNotes();
 
   // Creat new array with notes where title doesn't match:
-  notesToWrite = currentNotes.filter((note) => note.title !== title);
+  var notesToWrite = currentNotes.filter((note) => note.title !== title);
 
   // If the arrays are the same length:
   if (currentNotes.length === notesToWrite.length) {
     console.log("Note not found!");
   } else {
     console.log("Note removed!");
+    // Save notes:
+    saveNotes(notesToWrite);
   }
 }
 
@@ -139,7 +152,7 @@ var clearAllNotes = () => {
 // Export functions:
 module.exports = {
   addNote,
-  getAllNotes,
+  listNotes,
   getSingleNote,
   removeNote,
   clearAllNotes
