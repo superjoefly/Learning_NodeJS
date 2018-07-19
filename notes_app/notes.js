@@ -7,7 +7,7 @@ var fs = require('fs');
 
 // Define functions:
 
-// Get (reads) and returns notes from file:
+// Gets (reads) and returns notes from file:
 var getNotes = () => {
   try {
     var notesString = fs.readFileSync('notes-data.json');
@@ -21,19 +21,22 @@ var getNotes = () => {
 // Saves (writes) notes to file:
 var saveNotes = (notesToWrite) => {
   fs.writeFileSync('notes-data.json', JSON.stringify(notesToWrite));
-  console.log("Notes Saved!")
+  console.log("Notes Saved!");
 }
 
 
 // Validates title and returns current notes:
 var validateTitle = (currentNotes, newNote) => {
 
+  // Create new array with duplicates:
   var duplicateNotes = currentNotes.filter((note) => note.title === newNote.title);
 
+  // If we have duplicates:
   if (duplicateNotes.length > 0) {
-    console.log("Title must be unique!");
+    console.log("Err: Title must be unique!");
     return currentNotes;
   } else {
+    console.log("Note created!");
     currentNotes.push(newNote);
     return currentNotes;
   }
@@ -72,6 +75,7 @@ var getAllNotes = () => {
   // Get the current notes:
   var currentNotes = getNotes();
 
+  // If we have notes:
   if (currentNotes.length > 0) {
     currentNotes.forEach(function(note) {
       console.log(note.title + ' : ' + note.body);
@@ -79,7 +83,6 @@ var getAllNotes = () => {
   } else {
     console.log("No notes to display :-(");
   }
-
 };
 
 
@@ -91,17 +94,14 @@ var getSingleNote = (title) => {
   // Get the currentNotes:
   currentNotes = getNotes();
 
-  // Loop to find and display note:
-  match = 0;
-  currentNotes.forEach(function(note) {
-    if (note.title === title) {
-      console.log(note.title + ': ', note.body);
-      match += 1;
-    }
-  });
+  // Create new array with note if found:
+  singleNote = currentNotes.filter((note) => note.title === title);
 
-  // If there was no match:
-  if (match === 0) {
+  // Display note and message to user:
+  if (singleNote.length > 0) {
+    console.log("Note Found!");
+    console.log(singleNote[0].title + ' : ' + singleNote[0].body);
+  } else {
     console.log("Note not found!");
   }
 }
@@ -115,21 +115,15 @@ var removeNote = (title) => {
   // Get current notes:
   currentNotes = getNotes();
 
-  // Loop to find and remove note:
-  match = 0;
-  currentNotes.forEach(function(note, index) {
-    if (note.title === title) {
-      match += 1
-      currentNotes.splice(index, 1)
-      saveNotes(currentNotes)
-    }
-  });
+  // Creat new array with notes where title doesn't match:
+  notesToWrite = currentNotes.filter((note) => note.title !== title);
 
-  // If there was no match:
-  if (match === 0) {
+  // Display message to user:
+  if (currentNotes.length === notesToWrite.length) {
     console.log("Note not found!");
+  } else {
+    console.log("Note removed!");
   }
-
 }
 
 
