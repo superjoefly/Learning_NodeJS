@@ -1,5 +1,3 @@
-console.log('Starting app.js');
-
 // Requiring Modules:
 
 // Built-In Modules:
@@ -7,7 +5,7 @@ const fs = require('fs');
 
 // 3rd Party Modules (installed via NPM):
 const _ = require('lodash');
-const yargs = require('yargs')
+const yargs = require('yargs');
 
 // Custom (self-written) Modules:
 const notes = require('./notes.js');
@@ -16,18 +14,45 @@ const notes = require('./notes.js');
 ////////////////////////
 
 
-// Get input from user:
+// Yargs Options:
+const titleOptions = {
+  describe: 'Title of note',
+  demand: true,
+  alias: 't'
+};
 
-// Convert argv to yargs object:
-const argv = yargs.argv;
+const bodyOptions = {
+  describe: 'Body of note',
+  demand: true,
+  alias: 'b'
+};
+
+
+// Convert argv to yargs object (chain methods):
+const argv = yargs
+  .command('add', 'Add a new note', {
+    title: titleOptions,
+    body: bodyOptions
+  })
+  .command('list', 'List all notes')
+  .command('read', 'Read a note', {
+    title: titleOptions
+  })
+  .command('remove', 'Remove a note', {
+    title: titleOptions
+  })
+  .command('clear', 'Clear all notes')
+  .help()
+  .argv;
+
 
 // Set first propert of yargs object (argv) to 'command' variable:
 var command = argv._[0];
 
-// View in console:
-console.log('Process:', process.argv);
-console.log('Yargs:', argv);
-console.log('Command:', command);
+// // View in console:
+// console.log('Process:', process.argv);
+// console.log('Yargs Object:', argv);
+// console.log('Command:', command);
 
 
 if (command === 'add') {

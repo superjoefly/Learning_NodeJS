@@ -1,5 +1,3 @@
-console.log('Starting notes.js');
-
 // Require Modules:
 var fs = require('fs');
 
@@ -18,19 +16,20 @@ var getNotes = () => {
 }
 
 
+// Display note:
 var logNote = (note) => {
   // Break on this line and use repl to output notes //
   debugger;
   console.log("---");
   console.log('Title:', note.title);
   console.log('Body:', note.body);
-  console.log("---");
 }
 
 
-// Saves (writes) notes to file:
+// Writes notes to file:
 var saveNotes = (notesToWrite) => {
   fs.writeFileSync('notes-data.json', JSON.stringify(notesToWrite));
+  console.log("---")
   console.log("Notes Saved!");
 }
 
@@ -62,6 +61,7 @@ var addNote = (title, body) => {
 
   // If we have duplicates:
   if (duplicateTitles.length > 0) {
+    console.log("---")
     console.log("Err: Title must be unique!");
   } else {
     console.log("Adding Note:");
@@ -78,21 +78,18 @@ var addNote = (title, body) => {
 
 // Displays all notes:
 var listNotes = () => {
-  console.log("Listing all notes...");
 
   // Get the current notes:
   var currentNotes = getNotes();
 
+  console.log(`Listing ${currentNotes.length} note(s)...`);
+
   // If we have notes:
-  console.log("---")
   if (currentNotes.length > 0) {
-    currentNotes.forEach(function(note) {
-      console.log(note.title + ' : ' + note.body);
-    })
+    currentNotes.forEach((note) => logNote(note));
   } else {
     console.log("No notes to display :-(");
   }
-  console.log("---")
 };
 
 
