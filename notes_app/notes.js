@@ -34,12 +34,11 @@ var validateTitle = (currentNotes, newNote) => {
   // If we have duplicates:
   if (duplicateNotes.length > 0) {
     console.log("Err: Title must be unique!");
-    return currentNotes;
   } else {
     console.log("Note created!");
     currentNotes.push(newNote);
-    return currentNotes;
   }
+  return currentNotes;
 }
 
 
@@ -118,7 +117,7 @@ var removeNote = (title) => {
   // Creat new array with notes where title doesn't match:
   notesToWrite = currentNotes.filter((note) => note.title !== title);
 
-  // Display message to user:
+  // If the arrays are the same length:
   if (currentNotes.length === notesToWrite.length) {
     console.log("Note not found!");
   } else {
