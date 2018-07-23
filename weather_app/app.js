@@ -8,6 +8,9 @@ const yargs = require('yargs');
 // require geocode:
 const geocode = require('./geocode/geocode');
 
+// require darksky:
+const darksky = require('./darksky/darksky');
+
 // Convert argv to yargs object; define options:
 const argv = yargs
   .options({
@@ -24,11 +27,24 @@ const argv = yargs
 
 
   // Get address / coordinates:
-  geocode.geocodeAddress(argv.address, (errorMessage, results) => {
+  geocode.geocodeAddress(argv.address, (errorMessage, location) => {
     // What does the callback do?
     if (errorMessage) {
       console.log(errorMessage);
     } else {
-      console.log(JSON.stringify(results, undefined, 2));
+      // Get Weather Info:
+      getWeatherInfo(location);
     }
   });
+
+
+var getWeatherInfo = (location) => {
+  darksky.getWeather(location, (errorMessage, weather) => {
+    if (errorMessage) {
+      console.log(errorMessage);
+    } else {
+      console.log("Weather For", location.address);
+      console.log(weather);
+    }
+  })
+}
