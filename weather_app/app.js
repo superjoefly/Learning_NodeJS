@@ -26,25 +26,19 @@ const argv = yargs
   .argv;
 
 
-// Get location:
+// Get Location:
 geocode.geocodeAddress(argv.address, (errorMessage, location) => {
-  // What does the callback do?
   if (errorMessage) {
     console.log(errorMessage);
   } else {
     console.log("Getting weather info for", location.address);
     // Get Weather Info:
-    getWeatherInfo(location);
+    weather.getWeather(location, (errorMessage, currentWeather) => {
+      if (errorMessage) {
+        console.log(errorMessage);
+      } else {
+        console.log(currentWeather);
+      }
+    });
   }
 });
-
-// Get weather infomration:
-var getWeatherInfo = (location) => {
-  weather.getWeather(location, (errorMessage, currentWeather) => {
-    if (errorMessage) {
-      console.log(errorMessage);
-    } else {
-      console.log(currentWeather);
-    }
-  });
-};
