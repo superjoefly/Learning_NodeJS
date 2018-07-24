@@ -5,11 +5,11 @@
 // npm install --save yargs
 const yargs = require('yargs');
 
-// require geocode:
+// require geocode module:
 const geocode = require('./geocode/geocode');
 
-// require darksky:
-const darksky = require('./darksky/darksky');
+// require weather module:
+const weather = require('./weather/weather');
 
 // Convert argv to yargs object; define options:
 const argv = yargs
@@ -26,25 +26,25 @@ const argv = yargs
   .argv;
 
 
-  // Get address / coordinates:
-  geocode.geocodeAddress(argv.address, (errorMessage, location) => {
-    // What does the callback do?
+// Get location:
+geocode.geocodeAddress(argv.address, (errorMessage, location) => {
+  // What does the callback do?
+  if (errorMessage) {
+    console.log(errorMessage);
+  } else {
+    console.log("Getting weather info for", location.address);
+    // Get Weather Info:
+    getWeatherInfo(location);
+  }
+});
+
+// Get weather infomration:
+var getWeatherInfo = (location) => {
+  weather.getWeather(location, (errorMessage, currentWeather) => {
     if (errorMessage) {
       console.log(errorMessage);
     } else {
-      // Get Weather Info:
-      getWeatherInfo(location);
+      console.log(currentWeather);
     }
   });
-
-
-var getWeatherInfo = (location) => {
-  darksky.getWeather(location, (errorMessage, weather) => {
-    if (errorMessage) {
-      console.log(errorMessage);
-    } else {
-      console.log("Weather For", location.address);
-      console.log(weather);
-    }
-  })
-}
+};

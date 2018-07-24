@@ -15,12 +15,10 @@ var getWeather = (location, callback) => {
     url: url,
     json: true
   }, (error, response, body) => {
-    if (error) {
-      callback('Error: Unable to connect to Darksky servers!');
-    } else if (response === undefined) {
-      callback("Invalid address!");
-    } else if (response.statusCode === 200) {
+    if (!error && response.statusCode === 200) {
       callback(undefined, body.currently);
+    } else {
+      console.log("Unable to fetch weather!");
     }
   })
 
