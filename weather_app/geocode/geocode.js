@@ -3,12 +3,13 @@
 
 // npm install --save request
 var request = require('request');
+var env = require('../env');
 
 var geocodeAddress = (address) => {
 
   return new Promise((resolve, reject) => {
 
-    var key = 'AIzaSyD85ttCFuSbg_2hdVHvA-urD2awIOMFhsI';
+    var key = env.codes.googleAPI;
     var encAddress = encodeURIComponent(address);
     var url = `https://maps.googleapis.com/maps/api/geocode/json?address=${encAddress}&key=${key}`;
 

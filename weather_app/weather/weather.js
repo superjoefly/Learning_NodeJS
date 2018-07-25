@@ -3,11 +3,12 @@
 
 // npm install --save request
 const request = require('request');
+var env = require('../env');
 
 var getWeather = (location) => {
   return new Promise((resolve, reject) => {
 
-    var key = '5a7d00e90d262a07e959b8658cdd7562';
+    var key = env.codes.darkskyKey;
     var lat = location.latitude;
     var lng = location.longitude;
 
