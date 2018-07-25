@@ -1,6 +1,3 @@
-// Darksky.net/dev API Key
-// 5a7d00e90d262a07e959b8658cdd7562
-
 // npm install --save request
 const request = require('request');
 var env = require('../env');
@@ -8,7 +5,7 @@ var env = require('../env');
 var getWeather = (location) => {
   return new Promise((resolve, reject) => {
 
-    var key = env.codes.darkskyKey;
+    var key = env.keys.darkskyKey;
     var lat = location.latitude;
     var lng = location.longitude;
 
