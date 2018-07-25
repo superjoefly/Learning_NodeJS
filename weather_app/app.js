@@ -1,7 +1,3 @@
-// Set up api key for project (instructions): http://links.mead.io/api-fix
-// my api key: AIzaSyD85ttCFuSbg_2hdVHvA-urD2awIOMFhsI
-
-
 // npm install --save yargs
 const yargs = require('yargs');
 
@@ -26,19 +22,30 @@ const argv = yargs
   .argv;
 
 
-// Get Location:
-geocode.geocodeAddress(argv.address, (errorMessage, location) => {
-  if (errorMessage) {
-    console.log(errorMessage);
-  } else {
-    console.log("Getting weather info for", location.address);
-    // Get Weather Info:
-    weather.getWeather(location, (errorMessage, currentWeather) => {
-      if (errorMessage) {
-        console.log(errorMessage);
-      } else {
-        console.log(currentWeather);
-      }
-    });
-  }
+// Get Location (USING PROMISES):
+geocode.geocodeAddress(argv.address).then((location) => {
+  console.log("Getting weather information for", location.address);
+  return weather.getWeather(location);
+}).then((weather) => {
+  console.log(weather);
+}).catch((errorMessage) => {
+  console.log(errorMessage)
 });
+
+
+// // Get Location (USING CALLBACKS):
+// geocode.geocodeAddress(argv.address, (errorMessage, location) => {
+//   if (errorMessage) {
+//     console.log(errorMessage);
+//   } else {
+//     console.log("Getting weather info for", location.address);
+//     // Get Weather Info:
+//     weather.getWeather(location, (errorMessage, currentWeather) => {
+//       if (errorMessage) {
+//         console.log(errorMessage);
+//       } else {
+//         console.log(currentWeather);
+//       }
+//     });
+//   }
+// });
