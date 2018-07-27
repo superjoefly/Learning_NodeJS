@@ -1,49 +1,68 @@
-// Creating Web Server:
+// Require express module:
 const express = require('express');
 
+// Require handlebars module:
+const hbs = require('hbs');
+
 // Require path module:
-var path = require('path');
+const path = require('path');
 
 // Create new Express app:
 var app = express();
 
-// Using middleware to access static assets:
-// Navigate to localhost:3000/help.html
-app.use(express.static(__dirname + '/public'));
+// Use hbs as default view engine:
+app.set('view engine', 'hbs');
 
-// Set up http route handlers (request, response):
+
+////////////////////////
+
+
+// // Using middleware to access static assets:
+// // Navigate to localhost:3000/help.html
+// app.use(express.static(__dirname + '/public'));
+
+// // Serve static page using path.join (require path):
+// app.get('/help', (req, res) => {
+//   // Send html:
+//   res.sendFile(path.join(__dirname, '/public', 'help.html'));
+// });
+
+////////////////////////
+
+// // Sending html:
+// app.get('/', (req, res) => {
+//   // Send html:
+//   res.send('<h1 style="color: blue;">Hello Express!</h1>');
+// });
+
+
+// // Sending JSON:
+// app.get('/bad', (req, res) => {
+//   res.send({
+//     errorMessage: 'Unable to fulfill request!'
+//   });
+// });
+
+
+///////////////////////
+
+
+// HBS (Handle Bar Syntax) Templating:
 app.get('/', (req, res) => {
-  // Send html:
-  res.send('<h1 style="color: blue;">Hello Express!</h1>');
+  res.render('home.hbs', {
+    pageTitle: 'Home Page',
+    welcomeMessage: 'Welcome to my website!',
+    copyright: `Copyright ${new Date().getFullYear()} NewUp Developments`
+  });
 });
-
 
 app.get('/about', (req, res) => {
-  res.send({
-    name: 'Joey',
-    age: 38,
-    city: 'Boulder',
-    likes: [
-      'Hiking',
-      'Biking',
-      'Walking'
-    ]
+  res.render('about.hbs', {
+    pageTitle: 'About Me!',
+    copyright: `Copyright ${new Date().getFullYear()} NewUp Developments`
   });
 });
 
-
-app.get('/bad', (req, res) => {
-  res.send({
-    errorMessage: 'Unable to fulfill request!'
-  });
-});
-
-
-// Serve static page using path.join (require path):
-app.get('/help', (req, res) => {
-  // Send html:
-  res.sendFile(path.join(__dirname, '/public', 'help.html'));
-});
 
 
 // Bind app to local port:
