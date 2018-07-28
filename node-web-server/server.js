@@ -1,11 +1,14 @@
 // Require express module:
 const express = require('express');
-
 // Require handlebars module:
 const hbs = require('hbs');
-
 // Require path module:
 const path = require('path');
+// Require filesystem module:
+const fs = require('fs');
+
+
+
 
 // Create new Express app:
 var app = express();
@@ -13,20 +16,65 @@ var app = express();
 // Use hbs as default view engine:
 app.set('view engine', 'hbs');
 
+// Register partials:
+hbs.registerPartials(__dirname + '/views/partials');
 
-////////////////////////
+
+/////////////////////////
 
 
-// // Using middleware to access static assets:
-// // Navigate to localhost:3000/help.html
-// app.use(express.static(__dirname + '/public'));
+// MIDDLEWARES //
 
-// // Serve static page using path.join (require path):
+// Log Request Middleware:
+app.use((req, res, next) => {
+  var now = new Date().toString();
+  var log = `${now}: ${req.method} ${req.url}`;
+  console.log("----------------")
+  // Display log in console:
+  console.log(log);
+  // Write to file:
+  fs.appendFile('server.log', log + '\n', (err) => {
+    if (err) {
+      console.log("Unable to append to server.log");
+    }
+  });
+  // Continue:
+  next();
+});
+
+// // Maintenance Middleware:
+// app.use((req, res, next) => {
+//   res.render('maint.hbs');
+// });
+
+// Serve Folder Middleware:
+app.use(express.static(__dirname + '/public'));
+
+
+//////////////////////////
+
+
+// Register helpers (functions):
+hbs.registerHelper('getCurrentYear', () => {
+  return new Date().getFullYear();
+});
+hbs.registerHelper('screamIt', (text) => {
+  return text.toUpperCase();
+});
+
+
+//////////////////////
+
+
+
+// // Serve page using path.join (require path):
 // app.get('/help', (req, res) => {
 //   // Send html:
 //   res.sendFile(path.join(__dirname, '/public', 'help.html'));
 // });
 
+////////////////////////
+// Registering Handlers
 ////////////////////////
 
 // // Sending html:
@@ -40,7 +88,7 @@ app.set('view engine', 'hbs');
 // app.get('/bad', (req, res) => {
 //   res.send({
 //     errorMessage: 'Unable to fulfill request!'
-//   });
+  // });
 // });
 
 
@@ -52,14 +100,17 @@ app.get('/', (req, res) => {
   res.render('home.hbs', {
     pageTitle: 'Home Page',
     welcomeMessage: 'Welcome to my website!',
-    copyright: `Copyright ${new Date().getFullYear()} NewUp Developments`
+    // currentYear: new Date().getFullYear(),
+    publisher: 'NewUp Developments'
   });
 });
 
 app.get('/about', (req, res) => {
   res.render('about.hbs', {
     pageTitle: 'About Me!',
-    copyright: `Copyright ${new Date().getFullYear()} NewUp Developments`
+    welcomeMessage: 'Information about me and my servies.',
+    // currentYear: new Date().getFullYear(),
+    publisher: 'NewUp Developments'
   });
 });
 
@@ -68,6 +119,11 @@ app.get('/about', (req, res) => {
 // Bind app to local port:
 app.listen(3000, () => {
   console.log("Server is up on port 3000!");
+  console.log("----------------")
 });
 
 // In terminal: nodemon server.js to start wev-server:
+
+
+
+process.on('SIGINT', () => { console.log("Bye bye!"); process.exit(); });
