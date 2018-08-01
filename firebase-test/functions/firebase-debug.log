@@ -1,0 +1,42 @@
+[debug] [2018-07-31T08:29:21.383Z] ----------------------------------------------------------------------
+[debug] [2018-07-31T08:29:21.386Z] Command:       /home/joey/.nvm/versions/node/v6.11.5/bin/node /home/joey/.nvm/versions/node/v6.11.5/bin/firebase serve --only functions,hosting
+[debug] [2018-07-31T08:29:21.386Z] CLI Version:   4.0.1
+[debug] [2018-07-31T08:29:21.387Z] Platform:      linux
+[debug] [2018-07-31T08:29:21.387Z] Node Version:  v6.11.5
+[debug] [2018-07-31T08:29:21.387Z] Time:          Tue Jul 31 2018 02:29:21 GMT-0600 (MDT)
+[debug] [2018-07-31T08:29:21.387Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2018-07-31T08:29:21.397Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2018-07-31T08:29:21.397Z] > authorizing via signed-in user
+[debug] [2018-07-31T08:29:21.400Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/nodejs-app-79d38  
+  
+ Tue Jul 31 2018 02:29:21 GMT-0600 (MDT)
+[debug] [2018-07-31T08:29:21.689Z] <<< HTTP RESPONSE 200
+[debug] [2018-07-31T08:29:21.691Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/nodejs-app-79d38/tokens  
+  
+ Tue Jul 31 2018 02:29:21 GMT-0600 (MDT)
+[debug] [2018-07-31T08:29:22.072Z] <<< HTTP RESPONSE 200
+[debug] [2018-07-31T08:29:22.073Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/nodejs-app-79d38  
+  
+ Tue Jul 31 2018 02:29:22 GMT-0600 (MDT)
+[debug] [2018-07-31T08:29:22.290Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Serving from '/home/joey/webdev/LEARNING/UDEMY/NodeJS/firebase-test'...
+[info] 
+[info] i  functions: Preparing to emulate functions.
+[debug] [2018-07-31T08:29:22.931Z] Fetching environment
+[debug] [2018-07-31T08:29:22.933Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/952814607558:getServerAppConfig  
+  
+ Tue Jul 31 2018 02:29:22 GMT-0600 (MDT)
+[debug] [2018-07-31T08:29:22.934Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/952814607558/clients/_:getWebAppConfig  
+  
+ Tue Jul 31 2018 02:29:22 GMT-0600 (MDT)
+[debug] [2018-07-31T08:29:23.304Z] <<< HTTP RESPONSE 200
+[debug] [2018-07-31T08:29:23.320Z] <<< HTTP RESPONSE 200
+[debug] [2018-07-31T08:29:23.320Z] Starting @google-cloud/functions-emulator
+[info] i  hosting: Serving hosting files from: public
+[info] ✔  hosting: Local server: http://localhost:5000
+
+[debug] [2018-07-31T08:29:24.911Z] Parsing function triggers
+[info] ✔  functions: app: http://localhost:5001/nodejs-app-79d38/us-central1/app
+[info] [hosting] Rewriting / to local function app

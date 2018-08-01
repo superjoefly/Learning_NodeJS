@@ -1,0 +1,7 @@
+{
+  "projects": {
+    "nodejs": "nodejs-app-79d38",
+    "default": "nodejs-app-79d38",
+    "nodejs-app": "nodejs-app-79d38"
+  }
+}

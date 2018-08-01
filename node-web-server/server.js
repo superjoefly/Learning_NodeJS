@@ -6,6 +6,8 @@ const hbs = require('hbs');
 const path = require('path');
 // Require filesystem module:
 const fs = require('fs');
+// Store heroku port for app:
+const port = process.env.PORT || 3000;
 
 
 
@@ -117,8 +119,8 @@ app.get('/about', (req, res) => {
 
 
 // Bind app to local port:
-app.listen(3000, () => {
-  console.log("Server is up on port 3000!");
+app.listen(port, () => {
+  console.log(`Server is up on port ${port}!`);
   console.log("----------------")
 });
 
