@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Nodejs Todo List</title>
+
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  </head>
+  <body>
+
+    {{> navigation}}
+
+    <div class="w3-container">
+      {{> header}}
+
+      <ul class="w3-ul">
+        {{#each currentItems}}
+        <li>{{this.title}} : {{this.body}}</li>
+        {{/each}}
+      </ul>
+
+      {{> footer}}
+    </div>
+
+
+
+  </body>
+</html>

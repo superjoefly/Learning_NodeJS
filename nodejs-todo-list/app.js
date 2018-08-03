@@ -12,6 +12,33 @@ const _ = require('lodash')
 const items = require('./items.js');
 
 
+////////////////////
+
+
+// Store Heroku port:
+const port = process.env.port || 3000;
+
+// Create Express application:
+var app = express();
+
+// Set view engine:
+app.set('view engine', 'hbs');
+
+// Folder Middleware:
+// app.use(express.static(__dirname + '/public'));
+
+// Register Partials:
+hbs.registerPartials(__dirname + '/views/partials');
+
+// Register Helpers:
+hbs.registerHelper('getCurrentYear', () => {
+  return new Date().getFullYear();
+});
+hbs.registerHelper('screamIt', (text) => {
+  return text.toUpperCase();
+});
+
+
 /////////////////////
 
 
@@ -76,3 +103,40 @@ if (command === 'add') {
 } else {
   console.log("Command not recognized!");
 }
+
+var currentItems = items.getItems();
+
+// Bind routes:
+app.get('/', (req, res) => {
+  res.render('home.hbs', {
+    pageTitle: 'Home Page',
+    welcomeMessage: 'Welcome to my website!'
+  });
+});
+
+app.get('/about', (req, res) => {
+  res.render('about.hbs', {
+    pageTitle: 'About Me!',
+    welcomeMessage: 'Information about me and my servies.'
+  });
+});
+
+app.get('/list', (req, res) => {
+  res.render('list.hbs', {
+    pageTitle: 'Todo List',
+    currentItems: currentItems
+  });
+});
+
+
+// Bind Express app to local port:
+app.listen(port, () => {
+  console.log(`App is up on port ${port}`);
+  console.log("-------------");
+});
+
+
+process.on('SIGINT', () => {
+  console.log("Bye bye!");
+  process.exit();
+});

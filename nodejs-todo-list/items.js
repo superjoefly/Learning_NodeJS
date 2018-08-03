@@ -133,5 +133,6 @@ module.exports = {
   showItems,
   fetchItem,
   removeItem,
-  clearItems
+  clearItems,
+  getItems
 };
