@@ -1,0 +1,21 @@
+Testing using Mochajs
+
+npm install --save-dev mocha (installs as dev dependency only)
+
+Create utils folder
+
+Create utils.js file
+
+Create and export functions in utils.js file
+
+Create utils.test.js
+
+Require utils module and add test cases to utils.test.js
+
+Update script in package.json (use globbing pattern):
+  "test": "mocha **/*.test.js"
+
+Run: 'npm test' in console
+
+* Change functions in utils.js to induce error to make sure
+it's working.
