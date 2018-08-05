@@ -95,11 +95,11 @@ it('array or object should be equal', () => {
 
 // Test for inclusion:
 it('should include', () => {
-  // Object
+  // Object:
   expect({name: 'Joey'}).toEqual(
     expect.objectContaining({name: 'Joey'})
   )
-
+  // Array:
   expect(['red', 'blue']).toEqual(
     expect.arrayContaining(['red'])
   )
@@ -145,3 +145,27 @@ it('should have first and last names set', () => {
     expect.objectContaining({firstName: 'Joseph', lastName: 'Atwood'})
   );
 })
+
+
+
+//////////////////////////
+
+// ASYNC TESTING
+
+// Async add:
+it('should async add two numbers', () => {
+  return utils.asyncAdd(4, 5)
+  .then((result) => {
+    expect(result).toBe(9); // -> pass
+    expect(typeof result).toBe('number'); // -> pass
+  });
+});
+
+// Async square:
+it('should async square a number', () => {
+  return utils.asyncSquare(3)
+  .then((result) => {
+    expect(result).toBe(9); // -> pass
+    expect(typeof result).toBe('number'); // -> pass
+  });
+});

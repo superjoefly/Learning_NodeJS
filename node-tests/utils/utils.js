@@ -12,8 +12,30 @@ var setName = (user, fullName) => {
   return user;
 };
 
+var asyncAdd = (a, b) => {
+  // By returning a promise here, mocha will wait for the returned
+  // value before continuing with the test:
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve(a + b);
+    }, 1000);
+  });
+};
+
+var asyncSquare = (a) => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve(a * a);
+    }, 1000);
+  })
+}
+
+///////////////////////
+
 module.exports = {
   add,
   square,
-  setName
+  setName,
+  asyncAdd,
+  asyncSquare
 };
