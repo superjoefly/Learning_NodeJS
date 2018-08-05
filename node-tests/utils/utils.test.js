@@ -33,13 +33,13 @@ it('should add two numbers', () => {
 
   var res = utils.add(2, 3);
 
-  // Expect 5 to be 5 -> pass
-  expect(res).toBe(5);
-
   // // Throw error manually:
   // if (res !== 5) {
   //   throw new Error(`Expected 5, but got ${res}`);
   // }
+
+  // Using expect:
+  expect(res).toBe(5); // -> pass
 });
 
 
@@ -49,15 +49,17 @@ it('should square a number', () => {
 
   var res = utils.square(3);
 
-  // Expect 9 to be 9 -> pass
-  expect(res).toBe(9);
-
   // // Throw error manually:
   // if (res !== 9) {
   //   throw new Error(`Expected 9, but got ${res}`);
   // }
+
+  // Using expect:
+  expect(res).toBe(9); // -> pass
 });
 
+
+////////////////////////
 
 
 // Test for typeof:
@@ -69,6 +71,8 @@ it('should be a number', () => {
   expect(typeof res).toBe('number');
 });
 
+
+///////////////////
 
 
 // Test for equality (value):
@@ -92,6 +96,8 @@ it('array or object should be equal', () => {
 });
 
 
+////////////////////////
+
 
 // Test for inclusion:
 it('should include', () => {
@@ -105,6 +111,8 @@ it('should include', () => {
   )
 })
 
+
+/////////////////////
 
 
 // Test for divisibility:
@@ -149,6 +157,8 @@ it('should have first and last names set', () => {
 
 
 //////////////////////////
+
+
 
 // ASYNC TESTING
 
