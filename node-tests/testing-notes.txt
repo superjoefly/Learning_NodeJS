@@ -19,3 +19,14 @@ Run: 'npm test' in console
 
 * Change functions in utils.js to induce error to make sure
 it's working.
+
+/////////////////////
+
+To automatically re-run tests when code changes (using nodemon):
+  Add script to package.json:
+    "test-watch": "nodemon --exec \"npm test\""
+
+  Run: npm run test-watch
+
+  * Change functions in utils.js to induce error to make sure
+  it's working.
