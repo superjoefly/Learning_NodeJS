@@ -30,3 +30,16 @@ To automatically re-run tests when code changes (using nodemon):
 
   * Change functions in utils.js to induce error to make sure
   it's working.
+
+
+/////////////////
+
+
+Assertions using Expect / Jest (view Jest docs for reference):
+https://jestjs.io/docs/en/expect.html
+
+Install expect module:
+  npm install --save-dev expect
+
+Adjust test code in utils.test.js to use expect
+  ex: expect(res).toBe(5);
