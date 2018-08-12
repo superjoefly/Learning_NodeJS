@@ -43,3 +43,25 @@ Install expect module:
 
 Adjust test code in utils.test.js to use expect
   ex: expect(res).toBe(5);
+
+
+//////////////////
+
+
+Testing Express Applications using Supertest:
+
+npm install --save-dev supertest
+
+create server folder
+
+create server.js file
+
+create express application and bing routes (server.js)
+
+create server.test.js file with assertions
+
+export express app (server.js)
+
+import express app (server.test.js)
+
+Use Mocha / Expect for assertion testing (server.test.js)
