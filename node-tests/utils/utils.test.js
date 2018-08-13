@@ -167,6 +167,6 @@ describe('Playground:', () => {
         expect.objectContaining({firstName: 'Joseph', lastName: 'Atwood'})
       );
     });
-  })
+  });
 
 });
