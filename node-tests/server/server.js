@@ -17,11 +17,11 @@ app.get('/', (req, res) => {
   // })
 
 
-  // // Test D:
-  // res.status(404).send({
-  //   error: 'Page not found',
-  //   name: 'Todo App v1.0'
-  // })
+  // Test D:
+  res.status(404).send({
+    error: 'Page not found',
+    name: 'Todo App v1.0'
+  })
 });
 
 
