@@ -11,6 +11,7 @@ var app = require('./server').app;
 //   .end(done);
 // });
 
+
 // // Test B:
 // it('should return 200 and Hello World! response', (done) => {
 //   request(app)
@@ -19,6 +20,7 @@ var app = require('./server').app;
 //     .expect('Hello World!')
 //     .end(done);
 // });
+
 
 // // Test C:
 // it('should return 404 and Page not found error', (done) => {
@@ -31,15 +33,31 @@ var app = require('./server').app;
 //     .end(done);
 // });
 
-// Test D:
-it('should contain object property', (done) => {
+
+// // Test D:
+// it('should contain object property', (done) => {
+//   request(app)
+//     .get('/')
+//     .expect(404)
+//     .expect((res) => {
+//       expect(res.body).toMatchObject({
+//         error: 'Page not found',
+//       });
+//     })
+//     .end(done);
+// });
+
+
+
+// Challenge Test:
+it('should return my user object', (done) => {
   request(app)
-    .get('/')
-    .expect(404)
-    .expect((res) => {
-      expect(res.body).toMatchObject({
-        error: 'Page not found',
-      });
-    })
-    .end(done);
-});
+  .get('/users')
+  .expect(200)
+  .expect((res) => {
+    expect(res.body).toEqual(
+      expect.arrayContaining([{name: 'Joey', age: 38}])
+    )
+  })
+  .end(done);
+})
